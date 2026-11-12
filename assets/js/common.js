@@ -65,6 +65,22 @@ CMS.setLoading = function ($btn, on, label) {
   else { $btn.prop('disabled', false).html($btn.data('html')); }
 };
 
+/* ---- Auth helpers (used by every view after login) ---- */
+CMS.auth = {
+  userKey: 'cms_user',
+  isLoggedIn: function () { return !!CMS.storage.get(CMS.config.tokenKey); },
+  requireLogin: function () {
+    if (!this.isLoggedIn()) { window.location.replace('../login/login.html'); return false; }
+    return true;
+  },
+  getUser: function () { return CMS.storage.get(this.userKey) || 'User'; },
+  logout: function () {
+    CMS.storage.remove(CMS.config.tokenKey);
+    CMS.storage.remove(this.userKey);
+    window.location.replace('../login/login.html');
+  }
+};
+
 /* ---- Global init ---- */
 $(function () {
   // Bootstrap-select auto-init for any .selectpicker on any view

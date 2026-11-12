@@ -1,5 +1,8 @@
 /* login.js | behaviour specific to the login view */
 $(function () {
+    /* TEMP: hardcoded login for UI development only. Set to false when the backend is ready. */
+  var USE_HARDCODED_LOGIN = true;
+  var DEV_USER = '000000', DEV_PASS = 'abc123';
 
   /* ---------- 1. Translations ---------- */
   CMS.i18n.load({
@@ -59,11 +62,26 @@ $(function () {
     var $btn = $('#btnLogin');
     CMS.setLoading($btn, true);
 
+        if (USE_HARDCODED_LOGIN) {
+      setTimeout(function () {
+        if (user === DEV_USER && pass === DEV_PASS) {
+          CMS.storage.set(CMS.config.tokenKey, 'dev-token', $('#remember').is(':checked'));
+          CMS.storage.set(CMS.auth.userKey, 'Tell-IGP', $('#remember').is(':checked'));
+          window.location.href = '../home/home.html';
+        } else {
+          CMS.setLoading($btn, false);
+          CMS.alert('#loginAlert', CMS.i18n.t('failed'));
+          $('.login-card').removeClass('shake'); void $('.login-card')[0].offsetWidth; $('.login-card').addClass('shake');
+        }
+      }, 600);
+      return;
+    }
+
     // TODO (backend): adjust endpoint + payload + response fields
     CMS.api.post('/auth/login', { username: user, password: pass, remember: $('#remember').is(':checked') })
       .then(function (res) {
         CMS.storage.set(CMS.config.tokenKey, res.token, $('#remember').is(':checked'));
-        window.location.href = '../dashboard/dashboard.html';
+        window.location.href = '../home/home.html';
       })
       .catch(function (err) {
         CMS.alert('#loginAlert', (err && err.message && err.status ? err.message : CMS.i18n.t('failed')));
