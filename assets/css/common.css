@@ -1,0 +1,61 @@
+/* ==========================================================
+   common.css  |  Shared styles for all CMS views
+   Stack: Bootstrap 4.6.2 + Bootstrap-select 1.13.18
+   ========================================================== */
+:root {
+  --cms-navy-900: #050b1f;
+  --cms-navy-800: #0a1330;
+  --cms-navy-700: #101c45;
+  --cms-blue-600: #1d3fae;
+  --cms-gold-400: #f6c343;
+  --cms-gold-500: #e9ab1d;
+  --cms-text: #f1f4ff;
+  --cms-muted: #aab4d4;
+  --cms-border: rgba(255, 255, 255, .10);
+  --cms-surface: rgba(255, 255, 255, .045);
+  --cms-danger: #ff6b6b;
+  --cms-radius: 14px;
+  --cms-font: 'Inter', 'Noto Sans Sinhala', 'Noto Sans Tamil', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+html, body { height: 100%; }
+body {
+  font-family: var(--cms-font);
+  color: var(--cms-text);
+  background: var(--cms-navy-900);
+  -webkit-font-smoothing: antialiased;
+}
+a { color: var(--cms-gold-400); }
+a:hover { color: #ffd76b; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--cms-gold-400); outline-offset: 2px; }
+
+/* Primary gold button */
+.btn-cms {
+  background: linear-gradient(180deg, #f8cd57, var(--cms-gold-500));
+  color: #1a1400; font-weight: 700; border: 0; border-radius: 12px;
+  padding: .85rem 1.25rem; box-shadow: 0 10px 28px rgba(233, 171, 29, .28);
+  transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
+}
+.btn-cms:hover:not(:disabled) { color: #1a1400; transform: translateY(-1px); box-shadow: 0 14px 34px rgba(233, 171, 29, .4); }
+.btn-cms:disabled { filter: grayscale(.4) brightness(.85); cursor: not-allowed; }
+
+/* Dark form controls (also themes Bootstrap-select) */
+.form-control, .bootstrap-select > .dropdown-toggle {
+  background: var(--cms-surface) !important; color: var(--cms-text) !important;
+  border: 1px solid var(--cms-border) !important; border-radius: 12px !important;
+}
+.form-control:focus { box-shadow: 0 0 0 3px rgba(246, 195, 67, .18) !important; border-color: var(--cms-gold-400) !important; }
+.bootstrap-select .dropdown-menu { background: var(--cms-navy-700); border: 1px solid var(--cms-border); }
+.bootstrap-select .dropdown-item { color: var(--cms-text); }
+.bootstrap-select .dropdown-item:hover, .bootstrap-select .dropdown-item.active { background: rgba(246, 195, 67, .15); }
+
+/* Inline alert + toast */
+.cms-alert { display: none; border-radius: 10px; padding: .6rem .9rem; font-size: .875rem;
+  background: rgba(255, 107, 107, .12); border: 1px solid rgba(255, 107, 107, .4); color: #ffb3b3; }
+.cms-alert.show { display: block; }
+.cms-spinner { width: 1rem; height: 1rem; border: 2px solid rgba(0,0,0,.25); border-top-color: #1a1400;
+  border-radius: 50%; display: inline-block; animation: cms-spin .7s linear infinite; vertical-align: -2px; }
+@keyframes cms-spin { to { transform: rotate(360deg); } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
